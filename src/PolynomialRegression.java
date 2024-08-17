@@ -10,11 +10,11 @@ public class PolynomialRegression {
         Scanner scanner = new Scanner(System.in);
         List<double[]> dataPoints = new ArrayList<>();
 
-        // Read the number of data points
+        // Reading the number of data points
         System.out.print("Enter the number of data points: ");
         int numPoints = scanner.nextInt();
 
-        // Input data points
+        // Input of data points
         for (int i = 0; i < numPoints; i++) {
             System.out.printf("Enter x and y for point %d (separated by space): ", i + 1);
             double x = scanner.nextDouble();
@@ -35,7 +35,7 @@ public class PolynomialRegression {
             k = 2;
         }
 
-        // Test different polynomial degrees and find the best one based on cross-validated R²
+        // Testing different polynomial degrees and find the best one based on cross-validated R²
         int bestDegree = 1;
         double bestRSquared = -Double.MAX_VALUE;
         PolynomialFunction bestPolynomial = null;
@@ -51,20 +51,21 @@ public class PolynomialRegression {
             }
         }
 
-        // Check if a valid polynomial was found
+        // Checking if a valid polynomial was found
         if (bestPolynomial != null) {
-            // Print the best polynomial equation
+            // Printing the best polynomial equation
             System.out.println("\nBest fitted polynomial equation:");
             for (int i = bestPolynomial.getCoefficients().length - 1; i >= 0; i--) {
-                if (i == bestPolynomial.getCoefficients().length - 1) {
-                    System.out.printf("%.2f", bestPolynomial.getCoefficients()[i]);
+                double coeff = bestPolynomial.getCoefficients()[i];
+                if (i != bestPolynomial.getCoefficients().length - 1) {
+                    System.out.printf(" %c %.2fx^%d", coeff < 0 ? '-' : '+', Math.abs(coeff), i);
                 } else {
-                    System.out.printf(" + %.2fx^%d", bestPolynomial.getCoefficients()[i], i);
+                    System.out.printf("%.2fx^%d", coeff, i);
                 }
             }
             System.out.println();
 
-            // Print the fitted polynomial values for the input points
+            // Printing the fitted polynomial values for the input points
             System.out.println("Fitted values:");
             for (double[] point : dataPoints) {
                 double x = point[0];
@@ -97,7 +98,7 @@ public class PolynomialRegression {
             List<double[]> validationSet = new ArrayList<>();
 
             for (int j = 0; j < dataPoints.size(); j++) {
-                if (j / foldSize == i) {
+                if (j % k == i) { // Assigning based on modulo
                     validationSet.add(dataPoints.get(j));
                 } else {
                     trainingSet.add(dataPoints.get(j));

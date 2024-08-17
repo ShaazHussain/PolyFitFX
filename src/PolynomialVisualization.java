@@ -34,24 +34,24 @@ public class PolynomialVisualization extends Application {
         // Fit polynomial
         double[] coefficients = fitPolynomial(degree, xData, yData);
 
-        // Create X and Y axes
+        // Creating X and Y axes
         NumberAxis xAxis = new NumberAxis();
         NumberAxis yAxis = new NumberAxis();
         xAxis.setLabel("X");
         yAxis.setLabel("Y");
 
-        // Create the line chart
+        // Creating the line chart
         LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
         lineChart.setTitle("Polynomial Regression");
 
-        // Add scatter plot for original data
+        // Adding scatter plot for original data
         XYChart.Series<Number, Number> originalSeries = new XYChart.Series<>();
         originalSeries.setName("Original Data");
         for (int i = 0; i < xData.size(); i++) {
             originalSeries.getData().add(new XYChart.Data<>(xData.get(i), yData.get(i)));
         }
 
-        // Add fitted polynomial curve
+        // Adding fitted polynomial curve
         XYChart.Series<Number, Number> fittedSeries = new XYChart.Series<>();
         fittedSeries.setName("Fitted Curve");
         double minX = xData.get(0);
@@ -64,10 +64,10 @@ public class PolynomialVisualization extends Application {
             fittedSeries.getData().add(new XYChart.Data<>(x, y));
         }
 
-        // Add series to the chart
+        // Adding series to the chart
         lineChart.getData().addAll(originalSeries, fittedSeries);
 
-        // Set the scene and stage
+        // Setting the scene and stage
         Scene scene = new Scene(lineChart, 800, 600);
         stage.setScene(scene);
         stage.show();
